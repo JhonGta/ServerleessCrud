@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión Boutique - Futurista</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 40px;
+      background: #0d0d0d;
+      color: #ffffff;
+    }
+
+    h1, h2 {
+      color: #00ffe1;
+      text-shadow: 0 0 10px #00ffe1;
+    }
+
+    .formulario {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid #00ffe1;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 225, 0.2);
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border: 1px solid #00ffe1;
+      border-radius: 6px;
+      background-color: #1a1a1a;
+      color: #00ffe1;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button.crear {
+      background-color: #00d19a;
+    }
+
+    button.actualizar {
+      background-color: #007bff;
+    }
+
+    button.eliminar {
+      background-color: #ff3b3f;
+    }
+
+    button:hover {
+      filter: brightness(1.2);
+    }
+
+    table {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border-collapse: collapse;
+      border: 1px solid #00ffe1;
+      box-shadow: 0 0 15px rgba(0, 255, 225, 0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #00ffe1;
+      color: #e0e0e0;
+    }
+
+    th {
+      background-color: rgba(0, 255, 225, 0.1);
+      color: #00ffe1;
+    }
+
+    .acciones button {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gestión de Productos - Boutique</h1>
+
+  <div class="formulario">
+    <h2>Agregar / Editar Producto</h2>
+    <input type="hidden" id="producto-id" />
+    <input id="nombre" placeholder="Nombre del producto" />
+    <input id="categoria" placeholder="Categoría" />
+    <input id="talla" placeholder="Talla (ej. S, M, L)" />
+    <input id="precio" placeholder="Precio (ej. 49.99)" type="number" />
+    <input id="color" placeholder="Color" />
+    <button class="crear" onclick="crearProducto()">Guardar</button>
+    <button class="actualizar" onclick="actualizarProducto()" style="display:none;">Actualizar</button>
+  </div>
+
+  <h2>Lista de Productos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Talla</th>
+        <th>Precio</th>
+        <th>Color</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="productos-body"></tbody>
+  </table>
+
+  <script>
+    const API = 'https://90juyiyibl.execute-api.us-east-1.amazonaws.com/productos';
+
+    async function cargarProductos() {
+      const res = await fetch(API);
+      const data = await res.json();
+      const tbody = document.getElementById('productos-body');
+      tbody.innerHTML = '';
+
+      (data || []).forEach(p => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td>${p.nombre}</td>
+          <td>${p.categoria}</td>
+          <td>${p.talla}</td>
+          <td>$${p.precio}</td>
+          <td>${p.color}</td>
+          <td class="acciones">
+            <button class="actualizar" onclick="llenarFormulario('${p.id}', '${p.nombre}', '${p.categoria}', '${p.talla}', ${p.precio}, '${p.color}')">Editar</button>
+            <button class="eliminar" onclick="eliminarProducto('${p.id}')">Eliminar</button>
+          </td>`;
+        tbody.appendChild(fila);
+      });
+    }
+
+    async function crearProducto() {
+      const producto = leerFormulario();
+      if (!producto) return;
+
+      await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(producto)
+      });
+
+      limpiarFormulario();
+      cargarProductos();
+    }
+
+    async function actualizarProducto() {
+      const id = document.getElementById('producto-id').value;
+      const producto = leerFormulario();
+      if (!id || !producto) return;
+
+      await fetch(`${API}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(producto)
+      });
+
+      limpiarFormulario();
+      cargarProductos();
+    }
+
+    async function eliminarProducto(id) {
+      if (!confirm("¿Eliminar este producto?")) return;
+      await fetch(`${API}/${id}`, { method: 'DELETE' });
+      cargarProductos();
+    }
+
+    function llenarFormulario(id, nombre, categoria, talla, precio, color) {
+      document.getElementById('producto-id').value = id;
+      document.getElementById('nombre').value = nombre;
+      document.getElementById('categoria').value = categoria;
+      document.getElementById('talla').value = talla;
+      document.getElementById('precio').value = precio;
+      document.getElementById('color').value = color;
+
+      document.querySelector('.crear').style.display = 'none';
+      document.querySelector('.actualizar').style.display = 'inline-block';
+    }
+
+    function limpiarFormulario() {
+      document.getElementById('producto-id').value = '';
+      document.getElementById('nombre').value = '';
+      document.getElementById('categoria').value = '';
+      document.getElementById('talla').value = '';
+      document.getElementById('precio').value = '';
+      document.getElementById('color').value = '';
+
+      document.querySelector('.crear').style.display = 'inline-block';
+      document.querySelector('.actualizar').style.display = 'none';
+    }
+
+    function leerFormulario() {
+      const nombre = document.getElementById('nombre').value.trim();
+      const categoria = document.getElementById('categoria').value.trim();
+      const talla = document.getElementById('talla').value.trim();
+      const precio = parseFloat(document.getElementById('precio').value);
+      const color = document.getElementById('color').value.trim();
+
+      if (!nombre || !categoria || !talla || !precio || !color) {
+        alert("Todos los campos son obligatorios");
+        return null;
+      }
+
+      return { nombre, categoria, talla, precio, color };
+    }
+
+    cargarProductos();
+  </script>
+</body>
+</html>
