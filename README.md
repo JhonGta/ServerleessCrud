@@ -108,6 +108,29 @@ Metodo POST:
 ![Agregar producto](https://i.imgur.com/QPhZChQ.png)
 
 
+**7. POSTMAN- METODO PUT**
+
+Metodo PUT:
+
+![Actualizar producto](https://i.imgur.com/5uKopwf.png)
+
+
+**8. POSTMAN- METODO GET**
+
+Metodo GET:
+
+![Ver producto](https://i.imgur.com/HDaYBg1.png)
+
+
+
+
+
+**9. POSTMAN- METODO DELETE**
+
+Metodo DELETE:
+
+![Eliminar producto](https://i.imgur.com/Etx837I.png)
+
 
 
 
