@@ -97,7 +97,7 @@ El botón cambia a "Actualizar" y los campos se rellenan automáticamente:
 
 Se activa una confirmación y luego se elimina el producto de la lista:
 
-![Eliminar producto](https://imgur.com/a/jB9aGeV)
+![Eliminar producto](https://i.imgur.com/KWltckV.png)
 
 
 ---
