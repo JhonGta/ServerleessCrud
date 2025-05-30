@@ -100,6 +100,17 @@ Se activa una confirmación y luego se elimina el producto de la lista:
 ![Eliminar producto](https://i.imgur.com/KWltckV.png)
 
 
+
+**6. POSTMAN- METODO POST**
+
+Metodo POST:
+
+![Agregar producto](https://i.imgur.com/QPhZChQ.png)
+
+
+
+
+
 ---
 
 ## 🚀 Instrucciones de Ejecución
