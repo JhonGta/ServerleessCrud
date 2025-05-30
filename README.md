@@ -65,7 +65,7 @@ El propósito es demostrar la capacidad de construir aplicaciones web modernas s
 
 Se muestra cómo las funciones fueron desplegadas y los endpoints habilitados:
 
-![Despliegue exitoso](https://i.imgur.com/IvHbq2U.png)
+![Despliegue exitoso](https://i.imgur.com/1xLhdhI.png)
 
 ---
 
@@ -73,7 +73,7 @@ Se muestra cómo las funciones fueron desplegadas y los endpoints habilitados:
 
 Diseño limpio y moderno, listo para comenzar a registrar productos:
 
-![Interfaz vacía](https://i.imgur.com/Uz03Yy7.png)
+![Interfaz vacía](https://i.imgur.com/85HI5RX.png)
 
 ---
 
@@ -81,7 +81,7 @@ Diseño limpio y moderno, listo para comenzar a registrar productos:
 
 Aquí se muestra cómo se completan los datos del formulario:
 
-![Ingreso de datos](https://i.imgur.com/yzXZCGW.png)
+![Ingreso de datos](https://i.imgur.com/SACDqJY.png)
 
 ---
 
@@ -89,7 +89,7 @@ Aquí se muestra cómo se completan los datos del formulario:
 
 El botón cambia a "Actualizar" y los campos se rellenan automáticamente:
 
-![Actualizar producto](https://i.imgur.com/c5Yf8JY.png)
+![Actualizar producto](https://i.imgur.com/uGznq5A.png)
 
 ---
 
